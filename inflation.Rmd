@@ -41,12 +41,28 @@ For this dataset the Bank of England asked `r prettyNum(nrow(inflation), big.mar
 The survey has run quarterly since `r min(inflation$year)`.
 
 ```{r}
+# plot 1-y expectation
 inflation %>% 
   group_by(date) %>% 
-  summarise(across(c(perception, expectation),
+  summarise(across(c(perception, expectation_1y),
                    ~ mean(., na.rm = TRUE)),
             .groups = "drop") %>% 
-  pivot_longer(c(expectation, perception)) %>% 
+  pivot_longer(c(expectation_1y, perception)) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_line(aes(date, value, color = name)) +
+  theme_minimal() +
+  ylab("subjective inflation in %-points") +
+  labs(color = "") +
+  theme(legend.position = c(.1, .9))
+
+# plot 2-y expectation
+inflation %>% 
+  group_by(date) %>% 
+  summarise(across(c(perception, expectation_2y),
+                   ~ mean(., na.rm = TRUE)),
+            .groups = "drop") %>% 
+  pivot_longer(c(expectation_2y, perception)) %>% 
   ungroup() %>% 
   ggplot() +
   geom_line(aes(date, value, color = name)) +

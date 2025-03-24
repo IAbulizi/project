@@ -36,7 +36,9 @@ inflation <- inflation_raw %>%
     ),
     education = fct_recode(as.ordered(educ), low = "1", medium = "2", high = "3"),
     perception = ifelse(P_all == 99.0, NA, P_all),
-    expectation = ifelse(E1y_all == 99.0, NA, E1y_all),
+    expectation_1y = ifelse(E1y_all == 99.0, NA, E1y_all),
+    expectation_2y = ifelse(E2y_all == 99.0, NA, E2y_all),
+    expectation_5y = ifelse(E5y_all == 99.0, NA, E5y_all),
     # first four characters are year, convert to date
     year = ymd(str_c(str_sub(yyyyqq, 1, 4), "-01-01")),
     # last two characters are quarters, convert to number
@@ -47,7 +49,7 @@ inflation <- inflation_raw %>%
     year = year(year)
   ) %>% 
   # only select important variables
-  select(age, sex, education, perception, expectation, year, quarter, yyyyqq, date)
+  select(age, sex, education, perception, expectation_1y, expectation_2y, expectation_5y, year, quarter, yyyyqq, date)
 
 #----export-inflation---
 inflation_path <- here("data", "processed", "inflation.rds")
