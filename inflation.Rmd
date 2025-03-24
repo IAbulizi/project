@@ -50,19 +50,12 @@ inflation %>%
   ungroup() %>% 
   ggplot() +
   geom_line(aes(date, value, color = name)) +
-  NULL
-```
-
-A code chunk is for longer code/output:
-
-```{r}
-with(mtcars, plot(hp, mpg))
+  theme_minimal() +
+  ylab("subjective inflation in %-points") +
+  labs(color = "") +
+  theme(legend.position = c(.1, .9))
 ```
 
 Inline code is for single numbers/short text:
 
 We have `r 44+32` cars.
-
-```{python}
-print("Hello World! Python here, do you miss R already?")
-```
